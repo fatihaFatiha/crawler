@@ -6,44 +6,50 @@ import dao.PharmacieDao;
 import dao.PharmacieHibernateDao;
 import mapping.Pharmacie;
 
-public class PharmacieMetierImpl implements PharmacieMetier{
+/**
+ * 
+ * 
+ * @author BERNINZ Khadija
+ * @author BJIJE Fatiha
+ * @author ZOUBIR Fatima Zohra
+ * 
+ * 
+ * 
+ */
+public class PharmacieMetierImpl implements PharmacieMetier {
 
 	private PharmacieDao pharmacieDao = new PharmacieHibernateDao();
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pharmacie> getAllPharmacies() {
-		
+
 		return pharmacieDao.getAllPharmacies();
 	}
-	
+
 	@Override
-	public Pharmacie getPharmacie(String nom)
-	{
+	public Pharmacie getPharmacie(String nom) {
 		return pharmacieDao.getPharmacie(nom);
 	}
+
 	@Override
-	public void insert(Pharmacie pharmacie) 
-	{
+	public void insert(Pharmacie pharmacie) {
 		pharmacieDao.insert(pharmacie);
 	}
-	
+
 	@Override
-	public void update(Pharmacie pharmacie)
-	{
+	public void update(Pharmacie pharmacie) {
 		pharmacieDao.update(pharmacie);
-		
+
 	}
-	
+
 	@Override
-	public List<String> getAllNomsPharmacies()
-	{
+	public List<String> getAllNomsPharmacies() {
 		return pharmacieDao.getAllNomsPharmacies();
 	}
-	
+
 	@Override
-	public void deleteAll()
-	{
+	public void deleteAll() {
 		pharmacieDao.deleteAll();
 	}
 
@@ -54,6 +60,5 @@ public class PharmacieMetierImpl implements PharmacieMetier{
 	public void setPharmacieDao(PharmacieDao pharmacieDao) {
 		this.pharmacieDao = pharmacieDao;
 	}
-	
-	
+
 }

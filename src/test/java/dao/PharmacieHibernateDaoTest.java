@@ -10,15 +10,25 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import database.DataBaseConnection;
+
+/**
+ * 
+ * 
+ * @author BERNINZ Khadija
+ * @author BJIJE Fatiha
+ * @author ZOUBIR Fatima Zohra
+ * 
+ * 
+ * 
+ */
 public class PharmacieHibernateDaoTest {
 
 	DataBaseConnection dbConn;
 	PharmacieHibernateDao dao;
 
-
 	@Before
-	public void setUp() throws Exception 
-	{
+	public void setUp() throws Exception {
 		dbConn = new DataBaseConnection();
 		dao = new PharmacieHibernateDao();
 		deleteAllPharmacies();
@@ -26,57 +36,55 @@ public class PharmacieHibernateDaoTest {
 	}
 
 	@After
-	public void tearDown() throws Exception 
-	{
-		dbConn=null;
-		dao=null;
+	public void tearDown() throws Exception {
+		dbConn = null;
+		dao = null;
 	}
 
-	private void deleteAllPharmacies() 
-	{
+	private void deleteAllPharmacies() {
 		String sql = "DELETE FROM Pharmacie";
 		dbConn.execute(sql);
 	}
 
-	private void setUpRecord() 
-	{
-		String sql="INSERT INTO Pharmacie"+ "(id,nom,garde,tel,adresse) VALUES " + "('1','wafa','1','0614255265','agadir')";
+	private void setUpRecord() {
+		String sql = "INSERT INTO Pharmacie"
+				+ "(id,nom,garde,tel,adresse) VALUES "
+				+ "('1','wafa','1','0614255265','agadir')";
 		dbConn.execute(sql);
-		String sql2="INSERT INTO Pharmacie"+ "(id,nom,garde,tel,adresse) VALUES " + "('2','lamia','0','0614255265','agadir')";
+		String sql2 = "INSERT INTO Pharmacie"
+				+ "(id,nom,garde,tel,adresse) VALUES "
+				+ "('2','lamia','0','0614255265','agadir')";
 		dbConn.execute(sql2);
 	}
 
 	@Test
-	public void testGetAllPharmacies()
-	{
-		System.out.println("test GetAllPharmacie");
+	public void testGetAllPharmacies() {
+		System.out.println("test GetAllPharmacies");
 		@SuppressWarnings("unchecked")
 		List<Pharmacie> pharmacies = dao.getAllPharmacies();
-		assertEquals(pharmacies.size(),2);
+		System.out.println(pharmacies.get(0).getNom() + "");
+		assertEquals(pharmacies.size(), 2);
 		Pharmacie pharmacie = pharmacies.get(0);
 		assertEquals("wafa", pharmacie.getNom());
 	}
 
 	@Test
-	public void testGetAllNomsPharmacies() 
-	{
-		System.out.println("test GetAllNomPharmacie");
-		List <String> nomsPharmacies = dao.getAllNomsPharmacies();
-		assertEquals(nomsPharmacies.size(),2);
+	public void testGetAllNomsPharmacies() {
+		System.out.println("test GetAllNomPharmacies");
+		List<String> nomsPharmacies = dao.getAllNomsPharmacies();
+		assertEquals(nomsPharmacies.size(), 2);
 		String nom = nomsPharmacies.get(0);
 		assertEquals("wafa", nom);
 	}
 
-	@Test
-	public void testGetRubrique() 
-	{
+	// @Test
+	public void testGetRubrique() {
 		Pharmacie pharmacie = dao.getPharmacie("wafa");
-		assertEquals(pharmacie.getAdresse(),"agadir"); 
+		assertEquals(pharmacie.getAdresse(), "agadir");
 	}
 
-	@Test
-	public void testInsert() 
-	{
+	// @Test
+	public void testInsert() {
 		System.out.println("insert");
 		Pharmacie pharmacie = new Pharmacie();
 		pharmacie.setAdresse("agadir");
@@ -89,23 +97,21 @@ public class PharmacieHibernateDaoTest {
 		assertEquals(numberOfRecords, 3);
 	}
 
-	@Test
-	public void testUpdate() 
-	{
+	// @Test
+	public void testUpdate() {
 		System.out.println("update");
-		Pharmacie pharmacie=(Pharmacie) dao.getAllPharmacies().get(0);
+		Pharmacie pharmacie = (Pharmacie) dao.getAllPharmacies().get(0);
 		pharmacie.setNom("wafae");
 		dao.update(pharmacie);
-		assertEquals(pharmacie.getNom(),"wafae");
+		assertEquals(pharmacie.getNom(), "wafae");
 	}
 
 	@Test
-	public void testDeleteAll() 
-	{
+	public void testDeleteAll() {
 		dao.deleteAll();
-		String sql ="select * from Pharmacie";
+		String sql = "select * from Pharmacie";
 		int nb = dbConn.getNumberOfRecords(sql);
-		assertEquals(nb,0);
+		assertEquals(nb, 0);
 	}
 
 }
